@@ -13,6 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(PUBLIC_DIR));
 
+// ── Healthcheck for Railway ────────────────────────────────────────────────
+app.get('/health', (req, res) => {
+  res.status(200).send('ok');
+});
+
 // ── Simple file-based lead store (swap for DB later) ──────────────────────
 const LEADS_FILE = path.join(__dirname, 'leads.json');
 
