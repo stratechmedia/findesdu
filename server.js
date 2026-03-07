@@ -7,9 +7,11 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Public folder: use 'public' (findesdu/) or 'findesdu/public' (repo root e.g. Railway)
+const PUBLIC_DIR = path.join(__dirname, fs.existsSync(path.join(__dirname, 'public')) ? 'public' : 'findesdu/public');
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(PUBLIC_DIR));
 
 // ── Simple file-based lead store (swap for DB later) ──────────────────────
 const LEADS_FILE = path.join(__dirname, 'leads.json');
@@ -169,17 +171,11 @@ function leads_url() {
 
 // ── Serve index.html for all other routes ────────────────────────────────
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  ```
-  
-  Gem filen, så i terminalen:
-  ```
-  git add .
-  git commit -m "fix port binding"
-  git push  console.log(`findesdu.ai kører på port ${PORT}`);
+  console.log(`findesdu.ai kører på port ${PORT}`);
   console.log(`Leads URL: ${leads_url()}`);
 });
 
