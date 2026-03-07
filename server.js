@@ -172,7 +172,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`findesdu.ai kører på port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  ```
+  
+  Gem filen, så i terminalen:
+  ```
+  git add .
+  git commit -m "fix port binding"
+  git push  console.log(`findesdu.ai kører på port ${PORT}`);
   console.log(`Leads URL: ${leads_url()}`);
 });
+
