@@ -648,6 +648,71 @@
 
     .footer-links a:hover { color: var(--teal); }
 
+    /* ── VALUE STACK ────────────────────────────────────────────────────── */
+    .value-stack {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      text-align: left;
+    }
+
+    .value-item {
+      font-size: 0.82rem;
+      color: var(--teal);
+      padding: 4px 0;
+      font-weight: 500;
+    }
+
+    /* ── SUCCESS CTAS ────────────────────────────────────────────────────── */
+    .success-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .success-cta-primary {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.9rem 1.5rem;
+      background: var(--teal);
+      color: white;
+      border-radius: var(--radius);
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .success-cta-primary:hover { background: var(--teal-mid); }
+
+    .success-cta-secondary {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.75rem;
+      color: var(--mid);
+      text-decoration: none;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .success-cta-secondary:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* ── GUARANTEE ───────────────────────────────────────────────────────── */
+    .success-guarantee {
+      font-size: 0.75rem;
+      color: var(--mid);
+      text-align: center;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
     /* ── ERROR ───────────────────────────────────────────────────────────── */
     .error-msg {
       display: none;
@@ -676,11 +741,11 @@
   <div class="hero-inner">
     <div class="hero-badge">Gratis check — drevet af Anseri</div>
 
-    <h1>Svarer AI med dig —<br/>eller <em>uden dig?</em></h1>
+    <h1>Mens du læser dette<br/>ejer nogen <em>dine svar.</em></h1>
 
     <p class="hero-sub">
-      ChatGPT, Perplexity og Google AI besvarer millioner af spørgsmål dagligt.
-      De besøger ikke din hjemmeside. Tast din URL ind og find ud af, om du er med i svaret.
+      ChatGPT, Perplexity og Google AI besvarer spørgsmål om din branche hver dag —
+      og nævner din konkurrent. Tjek om det er dig eller dem.
     </p>
 
     <!-- SCAN CARD -->
@@ -754,8 +819,8 @@
 
         <!-- EMAIL GATE -->
         <div class="email-gate" id="emailGate">
-          <div class="email-gate-label">Få din fulde Anseri-analyse gratis</div>
-          <div class="email-gate-sub">Vi sender dig: hvem der ejer svarene i dit felt, hvad du mangler — og de første konkrete skridt.</div>
+          <div class="email-gate-label">Få den fulde analyse gratis</div>
+          <div class="email-gate-sub">Du får: hvem der ejer svarene i dit felt · de 5 sider der mangler · en konkret handlingsplan fra Anseri.</div>
           <div class="email-row">
             <input
               type="email"
@@ -769,13 +834,23 @@
 
         <!-- SUCCESS STATE -->
         <div class="success-state" id="successState">
-          <div class="success-icon">✉️</div>
           <div class="success-title">Analysen er bestilt</div>
-          <div class="success-sub">
-            Du hører fra os inden for 24 timer med en komplet gennemgang af din AI-synlighed.<br/>
-            Vil du i gang med det samme?
+          <div class="success-sub">Du hører fra os inden for 24 timer. Vil du tale med os nu?</div>
+
+          <div class="value-stack">
+            <div class="value-item">✓ Hvem der ejer svarene i dit felt — og hvorfor</div>
+            <div class="value-item">✓ De 5 sider du skal bygge for at eje dem selv</div>
+            <div class="value-item">✓ Konkret handlingsplan fra Anseri</div>
           </div>
-          <a class="anseri-btn" href="https://anseri.ai" target="_blank">Åbn Anseri</a>
+
+          <div class="success-ctas">
+            <a class="success-cta-primary" href="mailto:susanne@anseri.ai?subject=Book%20møde%20-%20AI%20synlighed&body=Hej%20Susanne%2C%0A%0AJeg%20har%20lige%20tjekket%20min%20AI-synlighed%20på%20findesdu.online%20og%20vil%20gerne%20booke%20et%2030-minutters%20møde.%0A%0AMit%20domæne%3A%20" id="bookMeetingBtn">Book et 30-min møde</a>
+            <a class="success-cta-secondary" href="https://anseri.ai" target="_blank">Åbn Anseri selv →</a>
+          </div>
+
+          <div class="success-guarantee">
+            Vi finder mindst 3 konkrete forbedringer — ellers er mødet gratis uanset hvad.
+          </div>
         </div>
       </div>
 
@@ -860,8 +935,8 @@
 <!-- FINAL CTA -->
 <section class="final-cta">
   <div class="section-label" style="color:rgba(255,255,255,0.5)">Klar?</div>
-  <h2 class="section-title">Find ud af hvad AI ved om dig</h2>
-  <p class="section-sub">30 sekunder. Gratis. Drevet af Anseri.</p>
+  <h2 class="section-title">Mens du venter ejer<br/>nogen dine svar</h2>
+  <p class="section-sub">Tjek det nu. 30 sekunder. Gratis. Drevet af Anseri.</p>
   <a class="cta-btn-large" href="#" onclick="document.getElementById('urlInput').focus(); window.scrollTo({top:0, behavior:'smooth'}); return false;">
     Start gratis scan
   </a>
@@ -985,6 +1060,13 @@
     }
   }
 
+  function updateBookingLink(domain) {
+    const btn = document.getElementById('bookMeetingBtn');
+    if (btn && domain) {
+      btn.href = `mailto:susanne@anseri.ai?subject=Book%20møde%20-%20${encodeURIComponent(domain)}&body=Hej%20Susanne%2C%0A%0AJeg%20har%20lige%20tjekket%20AI-synlighed%20for%20${encodeURIComponent(domain)}%20på%20findesdu.online%20og%20vil%20gerne%20booke%20et%2030-minutters%20møde.`;
+    }
+  }
+
   async function submitEmail() {
     const email = document.getElementById('emailInput').value;
     if (!email || !email.includes('@')) {
@@ -1012,10 +1094,7 @@
 
     document.getElementById('emailGate').style.display = 'none';
     document.getElementById('successState').classList.add('active');
-
-    setTimeout(() => {
-      window.open('https://anseri.ai', '_blank');
-    }, 4000);
+    updateBookingLink(currentDomain);
   }
 
   function sleep(ms) {
