@@ -1060,14 +1060,7 @@
     }
   }
 
-  function updateBookingLink(domain) {
-    const btn = document.getElementById('bookMeetingBtn');
-    if (btn && domain) {
-      btn.href = `mailto:susanne@anseri.ai?subject=Book%20møde%20-%20${encodeURIComponent(domain)}&body=Hej%20Susanne%2C%0A%0AJeg%20har%20lige%20tjekket%20AI-synlighed%20for%20${encodeURIComponent(domain)}%20på%20findesdu.online%20og%20vil%20gerne%20booke%20et%2030-minutters%20møde.`;
-    }
-  }
-
-  async function submitEmail() {
+async function submitEmail() {
     const email = document.getElementById('emailInput').value;
     if (!email || !email.includes('@')) {
       document.getElementById('emailInput').style.borderColor = 'var(--red)';
@@ -1094,7 +1087,6 @@
 
     document.getElementById('emailGate').style.display = 'none';
     document.getElementById('successState').classList.add('active');
-    updateBookingLink(currentDomain);
   }
 
   function sleep(ms) {
