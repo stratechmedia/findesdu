@@ -43,6 +43,35 @@ function getTransporter() {
   });
 }
 
+// ── Provision publisherpact Anseri account for a new lead ─────────────────
+async function provisionAnseriAccount(email, domain) {
+  const secret = process.env.PUBLISHERPACT_ANSERI_SECRET;
+  const baseUrl = process.env.PUBLISHERPACT_URL || 'https://publisherpact.com';
+  if (!secret) {
+    console.warn('PUBLISHERPACT_ANSERI_SECRET not set — skipping account provision');
+    return null;
+  }
+  try {
+    const res = await fetch(`${baseUrl}/api/anseri-signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, domain, secret }),
+      signal: AbortSignal.timeout(10000),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      console.log(`Anseri account provisioned for ${email} → ${data.redirectUrl}`);
+      return data.redirectUrl;
+    } else {
+      console.error('Anseri provision failed:', data);
+      return null;
+    }
+  } catch (err) {
+    console.error('Anseri provision error:', err.message);
+    return null;
+  }
+}
+
 // ── POST /api/leads ───────────────────────────────────────────────────────
 app.post('/api/leads', async (req, res) => {
   const { email, domain, score } = req.body;
@@ -63,6 +92,10 @@ app.post('/api/leads', async (req, res) => {
   // Save locally
   saveLead(lead);
   console.log('New lead:', lead);
+
+  // Provision publisherpact Anseri account (non-blocking)
+  // This creates/invites the user and sends them a magic link to their dashboard
+  provisionAnseriAccount(email, lead.domain).catch(() => {});
 
   // Send emails (non-blocking — don't fail if email is misconfigured)
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
@@ -100,51 +133,7 @@ app.post('/api/leads', async (req, res) => {
       `
     }).catch(err => console.error('Notify email failed:', err));
 
-    // 2. Confirm to lead
-    transporter.sendMail({
-      from,
-      to: email,
-      subject: 'Din AI synlighedsrapport er på vej 📊',
-      text: [
-        `Hej,`,
-        ``,
-        `Tak for din interesse i findesdu.ai.`,
-        ``,
-        `Vi har modtaget din anmodning om en fuld AI synlighedsrapport for ${domain || 'dit domæne'}.`,
-        `Vores team gennemgår scanningen og sender dig den fulde rapport inden for 24 timer.`,
-        ``,
-        `I mellemtiden kan du læse mere om hvad vi gør på Anseri.ai.`,
-        ``,
-        `Med venlig hilsen`,
-        `Susanne Sperling`,
-        `Anseri.ai`,
-        `susanne@anseri.ai`,
-      ].join('\n'),
-      html: `
-        <div style="font-family:sans-serif;max-width:480px;color:#0D1B2A">
-          <h2 style="color:#0D1B2A">Din rapport er på vej 📊</h2>
-          <p style="color:#556677;line-height:1.6">
-            Tak for din interesse i <strong>findesdu.ai</strong>.
-          </p>
-          <p style="color:#556677;line-height:1.6">
-            Vi har modtaget din anmodning om en fuld AI synlighedsrapport
-            ${domain ? `for <strong>${domain}</strong>` : ''}.
-            Vores team gennemgår scanningen og sender dig den fulde rapport
-            inden for <strong>24 timer</strong>.
-          </p>
-          <br/>
-          <a href="https://anseri.ai"
-             style="display:inline-block;background:#2A9D8F;color:white;padding:10px 20px;
-                    border-radius:8px;text-decoration:none;font-weight:600">
-            Se hvad Anseri kan gøre →
-          </a>
-          <br/><br/>
-          <p style="color:#AABBCC;font-size:12px">
-            Susanne Sperling · Anseri.ai · susanne@anseri.ai
-          </p>
-        </div>
-      `
-    }).catch(err => console.error('Confirm email failed:', err));
+    // Note: No confirmation email to the lead — Supabase sends the magic link directly.
   } else {
     console.warn('EMAIL_USER/EMAIL_PASS not set — emails skipped');
   }
