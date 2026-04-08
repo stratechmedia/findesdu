@@ -93,9 +93,13 @@ app.post('/api/leads', async (req, res) => {
   saveLead(lead);
   console.log('New lead:', lead);
 
-  // Provision publisherpact Anseri account (non-blocking)
-  // This creates/invites the user and sends them a magic link to their dashboard
-  provisionAnseriAccount(email, lead.domain).catch(() => {});
+  // Provision publisherpact Anseri account — await so we can return the redirectUrl
+  let redirectUrl = null;
+  try {
+    redirectUrl = await provisionAnseriAccount(email, lead.domain);
+  } catch (err) {
+    console.error('Anseri provision error:', err.message);
+  }
 
   // Send emails (non-blocking — don't fail if email is misconfigured)
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
@@ -133,12 +137,55 @@ app.post('/api/leads', async (req, res) => {
       `
     }).catch(err => console.error('Notify email failed:', err));
 
-    // Note: No confirmation email to the lead — Supabase sends the magic link directly.
+    // 2. Welcome email to the user
+    const dashboardLink = redirectUrl || 'https://publisherpact.com';
+    transporter.sendMail({
+      from,
+      to: email,
+      subject: `Din AI-synlighedsanalyse er klar — ${domain || 'dit domæne'}`,
+      text: [
+        `Hej,`,
+        ``,
+        `Tak fordi du scannede ${domain || 'dit domæne'} med findesdu.online.`,
+        ``,
+        `Din fulde Anseri-rapport er klar. Klik her for at se den:`,
+        dashboardLink,
+        ``,
+        `Rapporten viser:`,
+        `· Hvilke AI-systemer der kender din hjemmeside`,
+        `· De konkurrenter der bliver citeret i stedet for dig`,
+        `· Konkrete trin til at forbedre din AI-synlighed`,
+        ``,
+        `Linket er personligt og logger dig automatisk ind.`,
+        ``,
+        `Mvh`,
+        `Susanne Sperling`,
+        `Anseri / Stratechmedia`,
+      ].join('\n'),
+      html: `
+        <div style="font-family:sans-serif;max-width:520px;color:#0D1B2A">
+          <p>Hej,</p>
+          <p>Tak fordi du scannede <strong>${domain || 'dit domæne'}</strong> med findesdu.online.</p>
+          <p>Din fulde Anseri-rapport er klar:</p>
+          <p style="margin:24px 0">
+            <a href="${dashboardLink}"
+               style="background:#2A9D8F;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block">
+              Se min rapport →
+            </a>
+          </p>
+          <p style="font-size:13px;color:#556677">Rapporten viser hvilke AI-systemer der kender dig, hvem der citeres i stedet for dig, og konkrete trin til at forbedre din synlighed.</p>
+          <p style="font-size:13px;color:#556677">Linket er personligt og logger dig automatisk ind.</p>
+          <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
+          <p style="font-size:12px;color:#999">Susanne Sperling · Anseri / Stratechmedia · <a href="https://anseri.ai" style="color:#2A9D8F">anseri.ai</a></p>
+        </div>
+      `
+    }).catch(err => console.error('Welcome email failed:', err));
+
   } else {
     console.warn('EMAIL_USER/EMAIL_PASS not set — emails skipped');
   }
 
-  res.json({ ok: true });
+  res.json({ ok: true, redirectUrl });
 });
 
 // ── GET /api/leads (simple admin — protect with env var later) ────────────

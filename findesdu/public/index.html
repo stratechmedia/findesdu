@@ -834,22 +834,22 @@
 
         <!-- SUCCESS STATE -->
         <div class="success-state" id="successState">
-          <div class="success-title">Analysen er bestilt</div>
-          <div class="success-sub">Du hører fra os inden for 24 timer. Vil du tale med os nu?</div>
+          <div class="success-title">Tjek din mail</div>
+          <div class="success-sub">Vi har sendt dig et personligt link til din fulde Anseri-rapport. Klik på linket i mailen — det logger dig automatisk ind.</div>
 
           <div class="value-stack">
-            <div class="value-item">✓ Hvem der ejer svarene i dit felt — og hvorfor</div>
-            <div class="value-item">✓ De 5 sider du skal bygge for at eje dem selv</div>
-            <div class="value-item">✓ Konkret handlingsplan fra Anseri</div>
+            <div class="value-item">✓ Hvilke AI-systemer der kender din hjemmeside</div>
+            <div class="value-item">✓ Konkurrenter der citeres i stedet for dig</div>
+            <div class="value-item">✓ Konkrete trin til at forbedre din AI-synlighed</div>
           </div>
 
           <div class="success-ctas">
-            <a class="success-cta-primary" href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank" id="bookMeetingBtn">Book et 30-min møde</a>
-            <a class="success-cta-secondary" href="https://anseri.ai" target="_blank">Åbn Anseri selv →</a>
+            <a class="success-cta-primary" href="https://publisherpact.com" target="_blank" id="dashboardBtn">Åbn min rapport →</a>
+            <a class="success-cta-secondary" href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank">Book et 30-min møde</a>
           </div>
 
           <div class="success-guarantee">
-            Vi finder mindst 3 konkrete forbedringer — ellers er mødet gratis uanset hvad.
+            Ser du ikke mailen? Tjek din spam-mappe eller skriv til susanne@stratechmedia.com
           </div>
         </div>
       </div>
@@ -1072,7 +1072,7 @@ async function submitEmail() {
     btn.disabled = true;
 
     try {
-      await fetch('/api/leads', {
+      const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1081,6 +1081,12 @@ async function submitEmail() {
           score: currentScore,
         })
       });
+      const data = await res.json();
+      // If server returned a direct dashboard link, update the button
+      if (data.redirectUrl) {
+        const btn = document.getElementById('dashboardBtn');
+        if (btn) btn.href = data.redirectUrl;
+      }
     } catch (e) {
       console.warn('Lead capture failed (non-fatal):', e);
     }
