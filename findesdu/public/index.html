@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- DEPLOY_MARKER_BED24CF_V2 -->
+<!-- findesdu.online — mørkt tema, jordnært dansk sprog -->
 <html lang="da">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Findesdu.ai — Bliver din virksomhed fundet af AI?</title>
-  <meta name="description" content="Find ud af om ChatGPT, Perplexity og Google AI svarer med dig — eller uden dig. Gratis AI synlighedscheck." />
+  <title>Findesdu.online — Finder kunderne dig på ChatGPT og Google?</title>
+  <meta name="description" content="Tjek gratis om din virksomhed dukker op når folk spørger ChatGPT, Perplexity og Google AI. Ingen tilmelding. Svar på 30 sekunder." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -193,7 +193,7 @@
     }
 
     .url-input::placeholder { color: #AABBCC; }
-    .url-input:focus { border-color: var(--teal); background: white; }
+    .url-input:focus { border-color: var(--teal); background: #0a1e30; }
 
     .scan-btn {
       font-family: 'Outfit', sans-serif;
@@ -266,9 +266,7 @@
     .loading-steps li.done::before { content: '✓'; }
 
     /* ── TEASER RESULT ───────────────────────────────────────────────────── */
-    .result-state {
-      display: none;
-    }
+    .result-state { display: none; }
     .result-state.active { display: block; }
 
     .result-domain {
@@ -410,7 +408,7 @@
     }
 
     .email-input::placeholder { color: #AABBCC; }
-    .email-input:focus { border-color: var(--teal); background: white; }
+    .email-input:focus { border-color: var(--teal); background: #0a1e30; }
 
     .email-btn {
       font-family: 'Outfit', sans-serif;
@@ -436,11 +434,6 @@
     }
     .success-state.active { display: block; }
 
-    .success-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.75rem;
-    }
-
     .success-title {
       font-family: 'Outfit', sans-serif;
       font-size: 1.4rem;
@@ -454,23 +447,69 @@
       margin-bottom: 1.25rem;
     }
 
-    .anseri-btn {
-      display: inline-flex; align-items: center; gap: 8px;
+    /* ── VALUE STACK ────────────────────────────────────────────────────── */
+    .value-stack {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      text-align: left;
+    }
+
+    .value-item {
+      font-size: 0.82rem;
+      color: var(--teal);
+      padding: 4px 0;
+      font-weight: 500;
+    }
+
+    /* ── SUCCESS CTAS ────────────────────────────────────────────────────── */
+    .success-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .success-cta-primary {
+      display: block;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      padding: 0.8rem 1.6rem;
+      padding: 0.9rem 1.5rem;
       background: var(--teal);
       color: white;
-      border: none;
       border-radius: var(--radius);
-      cursor: pointer;
       text-decoration: none;
+      text-align: center;
       transition: background 0.2s;
     }
 
-    .anseri-btn:hover { background: var(--teal-mid); }
-    .anseri-btn::after { content: '→'; }
+    .success-cta-primary:hover { background: var(--teal-mid); }
+
+    .success-cta-secondary {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.75rem;
+      color: var(--mid);
+      text-decoration: none;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .success-cta-secondary:hover { color: var(--teal); border-color: var(--teal); }
+
+    .success-guarantee {
+      font-size: 0.75rem;
+      color: var(--mid);
+      text-align: center;
+      font-style: italic;
+      line-height: 1.5;
+    }
 
     /* ── SOCIAL PROOF ────────────────────────────────────────────────────── */
     .proof-strip {
@@ -649,71 +688,6 @@
 
     .footer-links a:hover { color: var(--teal); }
 
-    /* ── VALUE STACK ────────────────────────────────────────────────────── */
-    .value-stack {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      margin: 1rem 0;
-      text-align: left;
-    }
-
-    .value-item {
-      font-size: 0.82rem;
-      color: var(--teal);
-      padding: 4px 0;
-      font-weight: 500;
-    }
-
-    /* ── SUCCESS CTAS ────────────────────────────────────────────────────── */
-    .success-ctas {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 1rem;
-    }
-
-    .success-cta-primary {
-      display: block;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 0.9rem 1.5rem;
-      background: var(--teal);
-      color: white;
-      border-radius: var(--radius);
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .success-cta-primary:hover { background: var(--teal-mid); }
-
-    .success-cta-secondary {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 0.75rem;
-      color: var(--mid);
-      text-decoration: none;
-      text-align: center;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .success-cta-secondary:hover { color: var(--teal); border-color: var(--teal); }
-
-    /* ── GUARANTEE ───────────────────────────────────────────────────────── */
-    .success-guarantee {
-      font-size: 0.75rem;
-      color: var(--mid);
-      text-align: center;
-      font-style: italic;
-      line-height: 1.5;
-    }
-
     /* ── ERROR ───────────────────────────────────────────────────────────── */
     .error-msg {
       display: none;
@@ -740,13 +714,13 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">Gratis check — drevet af Anseri</div>
+    <div class="hero-badge">Gratis tjek — ingen tilmelding</div>
 
-    <h1>Mens du læser dette<br/>ejer nogen <em>dine svar.</em></h1>
+    <h1>Finder kunderne dig<br/>— eller <em>din konkurrent?</em></h1>
 
     <p class="hero-sub">
-      ChatGPT, Perplexity og Google AI besvarer spørgsmål om din branche hver dag —
-      og nævner din konkurrent. Tjek om det er dig eller dem.
+      Millioner af danskere spørger hver dag ChatGPT og Google AI om anbefalinger.
+      Tjek om din virksomhed dukker op — eller om det er en anden der tager dine kunder.
     </p>
 
     <!-- SCAN CARD -->
@@ -754,22 +728,22 @@
 
       <!-- INPUT STATE -->
       <div id="inputState">
-        <div class="scan-card-label">Tjek din AI-synlighed</div>
+        <div class="scan-card-label">Skriv din hjemmeside-adresse</div>
         <div class="input-row">
           <input
             type="url"
             id="urlInput"
             class="url-input"
-            placeholder="dinhjemmeside.dk"
+            placeholder="dinvirksomhed.dk"
             autocomplete="off"
             spellcheck="false"
           />
           <button class="scan-btn" id="scanBtn" onclick="startScan()">
-            Scan nu
+            Tjek nu
           </button>
         </div>
-        <div class="error-msg" id="errorMsg">Indtast venligst en gyldig URL</div>
-        <p class="scan-note">Ingen konto nødvendig. Vi gemmer ikke dit domæne.</p>
+        <div class="error-msg" id="errorMsg">Indtast venligst en gyldig hjemmeside-adresse</div>
+        <p class="scan-note">Gratis og fortroligt. Vi gemmer ikke din adresse.</p>
       </div>
 
       <!-- LOADING STATE -->
@@ -778,25 +752,25 @@
           <span></span><span></span><span></span>
         </div>
         <ul class="loading-steps" id="loadingSteps">
-          <li id="step1">Tjekker Google AI Overview...</li>
-          <li id="step2">Tjekker Perplexity AI...</li>
-          <li id="step3">Tjekker ChatGPT...</li>
-          <li id="step4">Analyserer strukturerede data...</li>
-          <li id="step5">Genererer rapport...</li>
+          <li id="step1">Spørger Google AI om din virksomhed...</li>
+          <li id="step2">Spørger Perplexity om din branche...</li>
+          <li id="step3">Spørger ChatGPT om dig...</li>
+          <li id="step4">Kigger på din hjemmesides opbygning...</li>
+          <li id="step5">Sammenstiller resultaterne...</li>
         </ul>
       </div>
 
       <!-- RESULT STATE -->
       <div class="result-state" id="resultState">
-        <div class="result-domain" id="resultDomain">dinhjemmeside.dk</div>
+        <div class="result-domain" id="resultDomain">dinvirksomhed.dk</div>
 
         <div class="score-row">
           <div>
-            <div class="score-label">AI Synlighedsscore</div>
+            <div class="score-label">Synlighedsscore</div>
             <div class="score-badge" id="scoreBadge">—</div>
           </div>
           <div style="text-align:right; font-size:0.8rem; color:var(--mid); max-width:160px; line-height:1.4;">
-            Baseret på <strong style="color:var(--dark)">5 AI-systemer</strong> og strukturel analyse
+            Tjekket på tværs af <strong style="color:var(--dark)">5 AI-systemer</strong> og din hjemmeside
           </div>
         </div>
 
@@ -809,19 +783,19 @@
         <!-- Blurred deeper analysis -->
         <div class="blurred-section">
           <div class="blurred-content">
-            <div style="font-size:0.8rem; font-weight:600; margin-bottom:0.5rem; color:var(--dark);">Fuld konkurrentanalyse</div>
-            <div style="font-size:0.75rem; color:var(--mid);">Hvem ejer svarene i dit domæne og hvorfor de vinder over dig...</div>
-            <div style="margin-top:0.75rem; font-size:0.75rem; color:var(--mid);">De 5 sider du skal bygge for at eje Answer Layer'et...</div>
+            <div style="font-size:0.8rem; font-weight:600; margin-bottom:0.5rem; color:var(--dark);">Hvem tager dine kunder?</div>
+            <div style="font-size:0.75rem; color:var(--mid);">De konkurrenter der nævnes i stedet for dig — og præcis hvorfor...</div>
+            <div style="margin-top:0.75rem; font-size:0.75rem; color:var(--mid);">Hvad der mangler på din hjemmeside for at du begynder at dukke op...</div>
           </div>
           <div class="blur-overlay">
-            <p>Fuld rapport tilgængelig<br/>via Anseri.ai</p>
+            <p>Fuld analyse i den komplette rapport<br/>— gratis via Anseri.ai</p>
           </div>
         </div>
 
         <!-- EMAIL GATE -->
         <div class="email-gate" id="emailGate">
           <div class="email-gate-label">Få den fulde analyse gratis</div>
-          <div class="email-gate-sub">Du får: hvem der ejer svarene i dit felt · de 5 sider der mangler · en konkret handlingsplan fra Anseri.</div>
+          <div class="email-gate-sub">Du får: hvem der vinder over dig · hvad der konkret mangler · en handlingsplan du selv kan gå i gang med.</div>
           <div class="email-row">
             <input
               type="email"
@@ -836,17 +810,17 @@
         <!-- SUCCESS STATE -->
         <div class="success-state" id="successState">
           <div class="success-title">Tjek din mail</div>
-          <div class="success-sub">Vi har sendt dig et personligt link til din fulde Anseri-rapport. Klik på linket i mailen — det logger dig automatisk ind.</div>
+          <div class="success-sub">Vi har sendt dig et personligt link til din fulde rapport. Klik på linket i mailen — det logger dig automatisk ind.</div>
 
           <div class="value-stack">
-            <div class="value-item">✓ Hvilke AI-systemer der kender din hjemmeside</div>
-            <div class="value-item">✓ Konkurrenter der citeres i stedet for dig</div>
-            <div class="value-item">✓ Konkrete trin til at forbedre din AI-synlighed</div>
+            <div class="value-item">✓ Hvem der nævnes i stedet for dig</div>
+            <div class="value-item">✓ Hvad der konkret mangler på din hjemmeside</div>
+            <div class="value-item">✓ Trin-for-trin plan til at komme med</div>
           </div>
 
           <div class="success-ctas">
             <a class="success-cta-primary" href="https://publisherpact.com" target="_blank" id="dashboardBtn">Åbn min rapport →</a>
-            <a class="success-cta-secondary" href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank">Book et 30-min møde</a>
+            <a class="success-cta-secondary" href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank">Book et gratis 30-min møde</a>
           </div>
 
           <div class="success-guarantee">
@@ -859,8 +833,8 @@
 
     <div class="proof-strip">
       <div class="proof-item">Gratis scanning</div>
-      <div class="proof-item">Ingen registrering</div>
-      <div class="proof-item">Resultater på 30 sekunder</div>
+      <div class="proof-item">Ingen oprettelse</div>
+      <div class="proof-item">Svar på 30 sekunder</div>
     </div>
 
   </div>
@@ -869,29 +843,29 @@
 <!-- HOW IT WORKS -->
 <section class="section">
   <div class="section-label">Sådan virker det</div>
-  <h2 class="section-title">Fra URL til handlingsplan<br/>på under ét minut</h2>
-  <p class="section-sub">Vi tjekker automatisk om AI-systemer kender dig, finder dig og citerer dig.</p>
+  <h2 class="section-title">Tre trin. Under ét minut.<br/>Ingen teknisk viden nødvendig.</h2>
+  <p class="section-sub">Du behøver bare din hjemmeside-adresse. Vi klarer resten.</p>
 
   <div class="steps-grid">
     <div class="step-card">
       <div class="step-num">01</div>
-      <div class="step-title">Tast din URL ind</div>
-      <div class="step-body">Ingen konto. Ingen kreditkort. Bare din hjemmeside-adresse.</div>
+      <div class="step-title">Skriv din adresse ind</div>
+      <div class="step-body">Ingen konto. Ingen kreditkort. Bare din hjemmeside.</div>
     </div>
     <div class="step-card">
       <div class="step-num">02</div>
-      <div class="step-title">Vi scanner automatisk</div>
-      <div class="step-body">Vores system tjekker Google AI, Perplexity, ChatGPT og din strukturelle parathed.</div>
+      <div class="step-title">Vi spørger AI'erne</div>
+      <div class="step-body">Vores system tjekker Google AI, Perplexity og ChatGPT — og kigger på din hjemmesides opbygning.</div>
     </div>
     <div class="step-card">
       <div class="step-num">03</div>
-      <div class="step-title">Se din teaser-rapport</div>
-      <div class="step-body">Du får en score og de vigtigste fund — med det samme, gratis.</div>
+      <div class="step-title">Se resultatet med det samme</div>
+      <div class="step-body">Du får en score og de vigtigste fund. Den fulde analyse sender vi gratis på email.</div>
     </div>
     <div class="step-card">
       <div class="step-num">04</div>
-      <div class="step-title">Få den fulde plan</div>
-      <div class="step-body">Efterlad din email — vi sender konkurrenceanalyse og handlingsplan via Anseri.ai.</div>
+      <div class="step-title">Gå i gang</div>
+      <div class="step-body">Rapporten viser konkret hvad der mangler — og hvad du kan gøre ved det.</div>
     </div>
   </div>
 </section>
@@ -899,35 +873,35 @@
 <!-- WHAT WE CHECK -->
 <section class="checks-section">
   <div class="section">
-    <div class="section-label">Hvad vi tjekker</div>
-    <h2 class="section-title">Hvad afgør om AI nævner dig</h2>
-    <p class="section-sub">AI-systemer kigger ikke bare på din hjemmeside. De vurderer dig på tværs af fem dimensioner.</p>
+    <div class="section-label">Hvad vi undersøger</div>
+    <h2 class="section-title">Hvad bestemmer om AI nævner dig</h2>
+    <p class="section-sub">Det er ikke tilfældigt hvem AI anbefaler. Vi tjekker de fem ting der afgør det.</p>
 
     <div class="checks-grid">
       <div class="check-item">
-        <div class="check-icon">🤖</div>
-        <div class="check-title">Brand-genkendelse</div>
-        <div class="check-desc">Ved AI-systemerne hvem du er og hvad du laver?</div>
+        <div class="check-icon">🤝</div>
+        <div class="check-title">Kender AI dig overhovedet?</div>
+        <div class="check-desc">Ved ChatGPT og Google hvem du er, hvad du tilbyder og hvor du holder til?</div>
       </div>
       <div class="check-item">
-        <div class="check-icon">📍</div>
-        <div class="check-title">Citation i svar</div>
-        <div class="check-desc">Citerer Google AI Overview og Perplexity dig i relevante svar?</div>
+        <div class="check-icon">📣</div>
+        <div class="check-title">Bliver du nævnt i svar?</div>
+        <div class="check-desc">Anbefaler Google AI og Perplexity dig, når nogen spørger om din type virksomhed?</div>
       </div>
       <div class="check-item">
         <div class="check-icon">🏗️</div>
-        <div class="check-title">Strukturerede data</div>
-        <div class="check-desc">Har dit site Schema.org markup AI-systemer kan læse?</div>
+        <div class="check-title">Kan AI læse din hjemmeside?</div>
+        <div class="check-desc">Har din hjemmeside den opbygning der gør det nemt for AI at forstå hvad du laver?</div>
       </div>
       <div class="check-item">
-        <div class="check-icon">⚔️</div>
-        <div class="check-title">Konkurrentbillede</div>
-        <div class="check-desc">Hvem ejer svarene i dit domæne — og hvorfor?</div>
+        <div class="check-icon">⚡</div>
+        <div class="check-title">Hvem slår dig?</div>
+        <div class="check-desc">Hvilke konkurrenter dukker op i stedet for dig — og hvad gør de anderledes?</div>
       </div>
       <div class="check-item">
-        <div class="check-icon">📡</div>
-        <div class="check-title">Platform-tilstedeværelse</div>
-        <div class="check-desc">Er du til stede der hvor AI-systemer henter fra?</div>
+        <div class="check-icon">🌐</div>
+        <div class="check-title">Er du synlig de rigtige steder?</div>
+        <div class="check-desc">AI henter fra mange kilder. Er din virksomhed til stede der, hvor det tæller?</div>
       </div>
     </div>
   </div>
@@ -935,11 +909,11 @@
 
 <!-- FINAL CTA -->
 <section class="final-cta">
-  <div class="section-label" style="color:rgba(255,255,255,0.5)">Klar?</div>
-  <h2 class="section-title">Mens du venter ejer<br/>nogen dine svar</h2>
-  <p class="section-sub">Tjek det nu. 30 sekunder. Gratis. Drevet af Anseri.</p>
+  <div class="section-label" style="color:rgba(255,255,255,0.5)">Klar til at finde ud af det?</div>
+  <h2 class="section-title">Mens du venter tager<br/>nogen dine kunder</h2>
+  <p class="section-sub">Tjek det nu. 30 sekunder. Gratis.</p>
   <a class="cta-btn-large" href="#" onclick="document.getElementById('urlInput').focus(); window.scrollTo({top:0, behavior:'smooth'}); return false;">
-    Start gratis scan
+    Start gratis tjek
   </a>
 </section>
 
@@ -947,20 +921,17 @@
 <footer>
   <a class="footer-logo" href="#">findesdu.online</a>
   <div class="footer-links">
-    <a href="https://publisherpact.com" target="_blank">PublisherPact</a>
     <a href="https://anseri.ai" target="_blank">Anseri.ai</a>
-    <a href="mailto:susanne@anseri.ai">Kontakt</a>
+    <a href="mailto:susanne@stratechmedia.com">Kontakt</a>
   </div>
 </footer>
 
 <script>
-  // ── Global state ────────────────────────────────────────────────────────
+  // ── Global state ──────────────────────────────────────────────────────────
   let currentDomain = '';
-  let currentScore = 0;
+  let currentScore  = 0;
 
-  // ── Simulated scan logic ─────────────────────────────────────────────────
-  // TODO: Replace with real API call to your scanner
-
+  // ── Helpers ───────────────────────────────────────────────────────────────
   function normalizeDomain(url) {
     let u = url.trim().toLowerCase();
     if (!u.startsWith('http')) u = 'https://' + u;
@@ -976,37 +947,45 @@
     return u.length > 3 && u.includes('.');
   }
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // ── Simulated score (erstattes med rigtig API når klar) ───────────────────
   function getSimulatedScore(domain) {
-    // Deterministic fake score based on domain length
-    // TODO: Replace with real scanner API
     const base = (domain.length * 7 + domain.charCodeAt(0)) % 60 + 10;
     return Math.min(base, 68);
   }
 
   function getFindings(score, domain) {
-    const findings = [];
     if (score < 40) {
-      findings.push({ icon: '❌', text: `${domain} genkendes ikke som autoritet af AI-systemer` });
-      findings.push({ icon: '❌', text: 'Ingen citation fundet i Google AI Overview eller Perplexity' });
-      findings.push({ icon: '⚠️', text: 'Schema.org markup mangler eller er utilstrækkelig' });
-      findings.push({ icon: '⚠️', text: 'Konkurrenter ejer sandsynligvis svarene i dit domæne' });
+      return [
+        { icon: '❌', text: 'AI kender ikke ' + domain + ' — du dukker ikke op i svarene' },
+        { icon: '❌', text: 'Hverken Google AI eller Perplexity nævner dig' },
+        { icon: '⚠️', text: 'Din hjemmeside er svær for AI at forstå og anbefale' },
+        { icon: '⚠️', text: 'Konkurrenter besvarer sandsynligvis spørgsmålene om dit felt' },
+      ];
     } else if (score < 60) {
-      findings.push({ icon: '✅', text: `${domain} er teknisk tilgængeligt for AI-crawlere` });
-      findings.push({ icon: '⚠️', text: 'Delvist genkendt — men ikke citeret i centrale svar' });
-      findings.push({ icon: '❌', text: 'FAQ-struktur og evergreen-sider mangler' });
-      findings.push({ icon: '⚠️', text: 'Strukturelle signaler under tærsklen for citation' });
+      return [
+        { icon: '✅', text: domain + ' er teknisk tilgængeligt for AI' },
+        { icon: '⚠️', text: 'AI ved hvem du er — men nævner dig ikke i de vigtige svar' },
+        { icon: '❌', text: 'Der mangler sider der besvarer kundernes spørgsmål' },
+        { icon: '⚠️', text: 'Du er tæt på — men konkurrenterne er stadig foran' },
+      ];
     } else {
-      findings.push({ icon: '✅', text: `${domain} har god teknisk tilgængelighed` });
-      findings.push({ icon: '✅', text: 'Delvist citeret i relevante AI-svar' });
-      findings.push({ icon: '⚠️', text: 'Potentiale for stærkere entitets-autoritet' });
-      findings.push({ icon: '⚠️', text: 'Konkurrenter er stadig stærkere i AI-svarelaget' });
+      return [
+        { icon: '✅', text: domain + ' er teknisk godt sat op' },
+        { icon: '✅', text: 'Du bliver nævnt i nogle svar — men ikke konsekvent' },
+        { icon: '⚠️', text: 'Du kan blive en tydeligere anbefaling i dit område' },
+        { icon: '⚠️', text: 'Konkurrenter er stadig mere synlige i AI-svarene' },
+      ];
     }
-    return findings;
   }
 
+  // ── Scan ──────────────────────────────────────────────────────────────────
   async function startScan() {
     const urlVal = document.getElementById('urlInput').value;
-    const errEl = document.getElementById('errorMsg');
+    const errEl  = document.getElementById('errorMsg');
 
     if (!validateUrl(urlVal)) {
       errEl.classList.add('active');
@@ -1017,11 +996,11 @@
     const domain = normalizeDomain(urlVal);
     currentDomain = domain;
     const score = getSimulatedScore(domain);
-    currentScore = score;
+    currentScore  = score;
+
     document.getElementById('inputState').style.display = 'none';
     document.getElementById('loadingState').classList.add('active');
 
-    // Animate loading steps
     const steps = ['step1','step2','step3','step4','step5'];
     for (let i = 0; i < steps.length; i++) {
       await sleep(700 + Math.random() * 400);
@@ -1030,63 +1009,63 @@
 
     await sleep(400);
 
-    // Hide loading, show result
     document.getElementById('loadingState').classList.remove('active');
     document.getElementById('resultState').classList.add('active');
 
     const findings = getFindings(score, domain);
 
-    // Set domain
     document.getElementById('resultDomain').textContent = domain;
 
-    // Animate score
     const scoreBadge = document.getElementById('scoreBadge');
     scoreBadge.textContent = score + '/100';
-    if (score < 40) scoreBadge.className = 'score-badge low';
+    if (score < 40)      scoreBadge.className = 'score-badge low';
     else if (score < 65) scoreBadge.className = 'score-badge mid-score';
-    else scoreBadge.className = 'score-badge high';
+    else                 scoreBadge.className = 'score-badge high';
 
-    // Animate bar
     await sleep(100);
     document.getElementById('scoreBar').style.width = score + '%';
 
-    // Populate findings
     const list = document.getElementById('findingsList');
     list.innerHTML = '';
     for (const f of findings) {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="finding-icon">${f.icon}</span><span>${f.text}</span>`;
+      const li   = document.createElement('li');
+      const icon = document.createElement('span');
+      const text = document.createElement('span');
+      icon.className   = 'finding-icon';
+      icon.textContent = f.icon;
+      text.textContent = f.text;
+      li.appendChild(icon);
+      li.appendChild(text);
       list.appendChild(li);
       await sleep(200);
     }
   }
 
-async function submitEmail() {
-    const email = document.getElementById('emailInput').value;
+  // ── Email / lead capture ──────────────────────────────────────────────────
+  async function submitEmail() {
+    const emailInput = document.getElementById('emailInput');
+    const email      = emailInput.value.trim();
+
     if (!email || !email.includes('@')) {
-      document.getElementById('emailInput').style.borderColor = 'var(--red)';
+      emailInput.style.borderColor = 'var(--red)';
       return;
     }
+    emailInput.style.borderColor = '';
 
-    const btn = document.querySelector('.email-btn');
+    const btn       = document.querySelector('.email-btn');
     btn.textContent = 'Sender...';
-    btn.disabled = true;
+    btn.disabled    = true;
 
     try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
+      const res  = await fetch('/api/leads', {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          domain: currentDomain,
-          score: currentScore,
-        })
+        body:    JSON.stringify({ email, domain: currentDomain, score: currentScore }),
       });
       const data = await res.json();
-      // If server returned a direct dashboard link, update the button
       if (data.redirectUrl) {
-        const btn = document.getElementById('dashboardBtn');
-        if (btn) btn.href = data.redirectUrl;
+        const dashBtn = document.getElementById('dashboardBtn');
+        if (dashBtn) dashBtn.href = data.redirectUrl;
       }
     } catch (e) {
       console.warn('Lead capture failed (non-fatal):', e);
@@ -1096,13 +1075,13 @@ async function submitEmail() {
     document.getElementById('successState').classList.add('active');
   }
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  // Allow Enter key in URL input
+  // ── Enter-tast ────────────────────────────────────────────────────────────
   document.getElementById('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') startScan();
+  });
+
+  document.getElementById('emailInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitEmail();
   });
 </script>
 </body>
