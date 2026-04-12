@@ -924,6 +924,7 @@
     <a href="https://anseri.ai" target="_blank">Anseri.ai</a>
     <a href="mailto:susanne@stratechmedia.com">Kontakt</a>
   </div>
+  <div style="margin-top:12px;font-size:12px;color:#556677;">Powered by <a href="https://stratechmedia.com" target="_blank" style="color:#556677;">Stratechmedia</a></div>
 </footer>
 
 <script>
@@ -951,13 +952,59 @@
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // ── Simulated score (erstattes med rigtig API når klar) ───────────────────
-  function getSimulatedScore(domain) {
-    const base = (domain.length * 7 + domain.charCodeAt(0)) % 60 + 10;
-    return Math.min(base, 68);
+  // ── Anseri scan API ───────────────────────────────────────────────────────
+  const ANSERI_API = 'https://api-production-0133.up.railway.app';
+
+  async function runAnserScan(domain) {
+    const res = await fetch(`${ANSERI_API}/visibility-scanner/scan`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ domain, mode: 'teaser' }),
+    });
+    if (!res.ok) throw new Error('Scan fejlede (' + res.status + ')');
+    return res.json();
   }
 
-  function getFindings(score, domain) {
+  // Oversæt AI-resultater + gaps til danske findings
+  function mapTeaserToFindings(teaser, domain) {
+    const findings = [];
+
+    const aiResults = teaser.aiSystemBreakdown || [];
+    const notFound = aiResults.filter(r => !r.cited && r.status !== 'error');
+    const found    = aiResults.filter(r => r.cited);
+
+    if (found.length === 0) {
+      findings.push({ icon: '❌', text: 'AI kender ikke ' + domain + ' — du dukker ikke op i svarene' });
+    } else if (found.length < aiResults.length) {
+      const names = found.map(r => r.name).join(' og ');
+      findings.push({ icon: '⚠️', text: 'Kun ' + names + ' nævner dig — resten kender dig ikke' });
+    } else {
+      findings.push({ icon: '✅', text: domain + ' bliver nævnt på tværs af AI-systemer' });
+    }
+
+    if (notFound.length > 0) {
+      const names = notFound.map(r => r.name).slice(0,2).join(' og ');
+      findings.push({ icon: '❌', text: names + (notFound.length > 2 ? ' m.fl.' : '') + ' nævner dig ikke i deres svar' });
+    }
+
+    const gaps = teaser.topGaps || [];
+    for (const gap of gaps.slice(0, 2)) {
+      if (gap) findings.push({ icon: '⚠️', text: gap });
+    }
+
+    const competitors = teaser.competitors || [];
+    if (competitors.length > 0) {
+      const c = competitors[0].domain;
+      findings.push({ icon: '⚠️', text: c + ' bliver anbefalet i stedet for dig' });
+    } else {
+      findings.push({ icon: '⚠️', text: 'Konkurrenter besvarer sandsynligvis spørgsmålene om dit felt' });
+    }
+
+    return findings.slice(0, 4);
+  }
+
+  // Fallback findings hvis API fejler
+  function getFallbackFindings(score, domain) {
     if (score < 40) {
       return [
         { icon: '❌', text: 'AI kender ikke ' + domain + ' — du dukker ikke op i svarene' },
@@ -995,24 +1042,42 @@
 
     const domain = normalizeDomain(urlVal);
     currentDomain = domain;
-    const score = getSimulatedScore(domain);
-    currentScore  = score;
 
     document.getElementById('inputState').style.display = 'none';
     document.getElementById('loadingState').classList.add('active');
 
+    // Kør rigtig Anseri-scan parallelt med loading-animationen
     const steps = ['step1','step2','step3','step4','step5'];
+    let teaserData = null;
+    let score = 0;
+
+    const scanPromise = runAnserScan(domain).then(data => {
+      teaserData = data.teaser || data;
+      score = Math.round(teaserData.score?.overall ?? teaserData.breakdown?.overall ?? 0);
+      if (score === 0 && teaserData.score?.overallDomainOutOf10) {
+        score = Math.round(teaserData.score.overallDomainOutOf10 * 10);
+      }
+    }).catch(err => {
+      console.warn('Anseri scan fejl:', err);
+      score = Math.min((domain.length * 7 + domain.charCodeAt(0)) % 60 + 10, 68);
+    });
+
     for (let i = 0; i < steps.length; i++) {
-      await sleep(700 + Math.random() * 400);
+      await sleep(800 + Math.random() * 400);
       document.getElementById(steps[i]).classList.add('done');
     }
 
-    await sleep(400);
+    await scanPromise;
+    await sleep(300);
+
+    currentScore = score;
 
     document.getElementById('loadingState').classList.remove('active');
     document.getElementById('resultState').classList.add('active');
 
-    const findings = getFindings(score, domain);
+    const findings = teaserData
+      ? mapTeaserToFindings(teaserData, domain)
+      : getFallbackFindings(score, domain);
 
     document.getElementById('resultDomain').textContent = domain;
 
@@ -1026,7 +1091,7 @@
     document.getElementById('scoreBar').style.width = score + '%';
 
     const list = document.getElementById('findingsList');
-    list.innerHTML = '';
+    while (list.firstChild) list.removeChild(list.firstChild);
     for (const f of findings) {
       const li   = document.createElement('li');
       const icon = document.createElement('span');
