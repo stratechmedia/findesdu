@@ -962,7 +962,10 @@
       body: JSON.stringify({ domain, mode: 'teaser' }),
     });
     if (!res.ok) throw new Error('Scan fejlede (' + res.status + ')');
-    return res.json();
+    const json = await res.json();
+    // Anseri returnerer {success, data: {scanId, teaser: {...}}}
+    // Unwrap til teaser-objektet så frontenden kan læse score/aiSystemBreakdown direkte
+    return json?.data?.teaser || json?.teaser || json;
   }
 
   // Oversæt AI-resultater + gaps til danske findings
@@ -1051,24 +1054,35 @@
     let teaserData = null;
     let score = 0;
 
-    const scanPromise = runAnserScan(domain).then(data => {
-      teaserData = data.teaser || data;
-      score = Math.round(teaserData.score?.overall ?? teaserData.breakdown?.overall ?? 0);
-      if (score === 0 && teaserData.score?.overallDomainOutOf10) {
-        score = Math.round(teaserData.score.overallDomainOutOf10 * 10);
-      }
+    let scanDone = false;
+    const scanPromise = runAnserScan(domain).then(teaser => {
+      teaserData = teaser;
+      score = Math.round(
+        teaserData.breakdown?.overall ??
+        teaserData.score?.overall ??
+        (teaserData.score?.overallDomainOutOf10 ? teaserData.score.overallDomainOutOf10 * 10 : 0)
+      );
+      scanDone = true;
     }).catch(err => {
       console.warn('Anseri scan fejl:', err);
       score = Math.min((domain.length * 7 + domain.charCodeAt(0)) % 60 + 10, 68);
+      scanDone = true;
     });
 
+    // Første gennemløb: marker de 5 steps som done i naturligt tempo
     for (let i = 0; i < steps.length; i++) {
-      await sleep(800 + Math.random() * 400);
+      await sleep(900 + Math.random() * 500);
       document.getElementById(steps[i]).classList.add('done');
     }
 
+    // Scanneren kører stadig (60-80s typisk) — hold sidste step "aktiv" indtil svar
+    const step5 = document.getElementById('step5');
+    step5.classList.remove('done');
+    step5.textContent = 'Sammenstiller resultaterne — kan tage op til et minut...';
     await scanPromise;
-    await sleep(300);
+    step5.classList.add('done');
+    step5.textContent = 'Sammenstiller resultaterne...';
+    await sleep(400);
 
     currentScore = score;
 
