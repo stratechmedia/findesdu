@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Findesdu.online — Finder kunderne dig på ChatGPT og Google?</title>
-  <meta name="description" content="Tjek gratis om din virksomhed dukker op når folk spørger ChatGPT, Perplexity og Google AI. Ingen tilmelding. Svar på 30 sekunder." />
+  <meta name="description" content="Tjek gratis om din virksomhed dukker op når folk spørger ChatGPT og Google om anbefalinger. Ingen tilmelding. Svar på et minut." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -253,17 +253,55 @@
       50% { transform: translateY(-6px); opacity: 1; }
     }
 
-    .loading-steps { list-style: none; text-align: left; }
-    .loading-steps li {
-      font-size: 0.85rem;
-      color: var(--mid);
-      padding: 4px 0;
-      display: flex; align-items: center; gap: 8px;
-      transition: color 0.3s;
+    /* ── LOADING: progress bar + rolling status ────────────────────────── */
+    .loading-headline {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      text-align: center;
     }
-    .loading-steps li.done { color: var(--teal); }
-    .loading-steps li::before { content: '○'; font-size: 0.7rem; }
-    .loading-steps li.done::before { content: '✓'; }
+    .loading-status {
+      font-size: 0.9rem;
+      color: var(--mid);
+      text-align: center;
+      min-height: 1.3em;
+      transition: opacity 0.35s ease;
+      margin-bottom: 1.25rem;
+    }
+    .loading-status.fade { opacity: 0; }
+
+    .loading-progress-wrap {
+      background: var(--light);
+      border-radius: 100px;
+      height: 8px;
+      overflow: hidden;
+      margin: 0 auto 0.75rem;
+      max-width: 360px;
+    }
+    .loading-progress-bar {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-mid));
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .loading-progress-pct {
+      font-size: 0.75rem;
+      color: var(--mid);
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.5rem;
+    }
+    .loading-hint {
+      font-size: 0.75rem;
+      color: var(--mid);
+      text-align: center;
+      max-width: 320px;
+      margin: 1rem auto 0;
+      line-height: 1.5;
+      opacity: 0.8;
+    }
 
     /* ── TEASER RESULT ───────────────────────────────────────────────────── */
     .result-state { display: none; }
@@ -751,13 +789,13 @@
         <div class="loader-dots">
           <span></span><span></span><span></span>
         </div>
-        <ul class="loading-steps" id="loadingSteps">
-          <li id="step1">Spørger Google AI om din virksomhed...</li>
-          <li id="step2">Spørger Perplexity om din branche...</li>
-          <li id="step3">Spørger ChatGPT om dig...</li>
-          <li id="step4">Kigger på din hjemmesides opbygning...</li>
-          <li id="step5">Sammenstiller resultaterne...</li>
-        </ul>
+        <div class="loading-headline" id="loadingHeadline">Vi tjekker din hjemmeside</div>
+        <div class="loading-status" id="loadingStatus">Går i gang...</div>
+        <div class="loading-progress-wrap">
+          <div class="loading-progress-bar" id="loadingProgressBar"></div>
+        </div>
+        <div class="loading-progress-pct" id="loadingProgressPct">0%</div>
+        <div class="loading-hint">Det tager cirka et minut. Vi stiller AI'erne en masse spørgsmål om din branche for at se om de nævner dig.</div>
       </div>
 
       <!-- RESULT STATE -->
@@ -766,11 +804,11 @@
 
         <div class="score-row">
           <div>
-            <div class="score-label">Synlighedsscore</div>
+            <div class="score-label">Hvor synlig er du?</div>
             <div class="score-badge" id="scoreBadge">—</div>
           </div>
-          <div style="text-align:right; font-size:0.8rem; color:var(--mid); max-width:160px; line-height:1.4;">
-            Tjekket på tværs af <strong style="color:var(--dark)">5 AI-systemer</strong> og din hjemmeside
+          <div style="text-align:right; font-size:0.8rem; color:var(--mid); max-width:170px; line-height:1.4;">
+            Baseret på <strong style="color:var(--dark)">24 rigtige spørgsmål</strong> stillet til ChatGPT og Google
           </div>
         </div>
 
@@ -855,7 +893,7 @@
     <div class="step-card">
       <div class="step-num">02</div>
       <div class="step-title">Vi spørger AI'erne</div>
-      <div class="step-body">Vores system tjekker Google AI, Perplexity og ChatGPT — og kigger på din hjemmesides opbygning.</div>
+      <div class="step-body">Vi stiller ChatGPT og Google de spørgsmål dine kunder faktisk stiller — og ser om du dukker op i svarene.</div>
     </div>
     <div class="step-card">
       <div class="step-num">03</div>
@@ -886,7 +924,7 @@
       <div class="check-item">
         <div class="check-icon">📣</div>
         <div class="check-title">Bliver du nævnt i svar?</div>
-        <div class="check-desc">Anbefaler Google AI og Perplexity dig, når nogen spørger om din type virksomhed?</div>
+        <div class="check-desc">Når nogen spørger AI'en om en god [din branche], anbefaler den så dig — eller en anden?</div>
       </div>
       <div class="check-item">
         <div class="check-icon">🏗️</div>
@@ -977,17 +1015,17 @@
     const found    = aiResults.filter(r => r.cited);
 
     if (found.length === 0) {
-      findings.push({ icon: '❌', text: 'AI kender ikke ' + domain + ' — du dukker ikke op i svarene' });
+      findings.push({ icon: '❌', text: domain + ' bliver ikke nævnt — AI kender dig ikke endnu' });
     } else if (found.length < aiResults.length) {
       const names = found.map(r => r.name).join(' og ');
-      findings.push({ icon: '⚠️', text: 'Kun ' + names + ' nævner dig — resten kender dig ikke' });
+      findings.push({ icon: '⚠️', text: 'Kun ' + names + ' kender dig — de andre nævner dig ikke' });
     } else {
-      findings.push({ icon: '✅', text: domain + ' bliver nævnt på tværs af AI-systemer' });
+      findings.push({ icon: '✅', text: domain + ' bliver nævnt af både ChatGPT og Google' });
     }
 
     if (notFound.length > 0) {
       const names = notFound.map(r => r.name).slice(0,2).join(' og ');
-      findings.push({ icon: '❌', text: names + (notFound.length > 2 ? ' m.fl.' : '') + ' nævner dig ikke i deres svar' });
+      findings.push({ icon: '❌', text: names + (notFound.length > 2 ? ' m.fl.' : '') + ' overser dig helt i deres svar' });
     }
 
     const gaps = teaser.topGaps || [];
@@ -1010,10 +1048,10 @@
   function getFallbackFindings(score, domain) {
     if (score < 40) {
       return [
-        { icon: '❌', text: 'AI kender ikke ' + domain + ' — du dukker ikke op i svarene' },
-        { icon: '❌', text: 'Hverken Google AI eller Perplexity nævner dig' },
-        { icon: '⚠️', text: 'Din hjemmeside er svær for AI at forstå og anbefale' },
-        { icon: '⚠️', text: 'Konkurrenter besvarer sandsynligvis spørgsmålene om dit felt' },
+        { icon: '❌', text: domain + ' bliver ikke nævnt — AI kender dig ikke endnu' },
+        { icon: '❌', text: 'Hverken ChatGPT eller Google anbefaler dig' },
+        { icon: '⚠️', text: 'Din hjemmeside er svær for AI at forstå' },
+        { icon: '⚠️', text: 'Andre i din branche får svarene i stedet for dig' },
       ];
     } else if (score < 60) {
       return [
@@ -1033,6 +1071,29 @@
   }
 
   // ── Scan ──────────────────────────────────────────────────────────────────
+
+  // Statusmeddelelser der roterer mens scanningen kører.
+  // Hver besked vises ~8s. Skriv som om du fortæller en ven hvad der sker.
+  const LOADING_MESSAGES = [
+    { at:  0, text: 'Finder din hjemmeside...' },
+    { at:  6, text: 'Spørger ChatGPT om din branche' },
+    { at: 14, text: 'Tjekker hvem Google anbefaler' },
+    { at: 24, text: 'Kigger efter dig i AI-svarene' },
+    { at: 36, text: 'Sammenligner med andre i din branche' },
+    { at: 48, text: 'Finder ud af hvem der bliver foretrukket' },
+    { at: 62, text: 'Samler det hele — næsten færdig' },
+    { at: 78, text: 'Sidste detaljer...' },
+  ];
+
+  function setLoadingStatus(text) {
+    const el = document.getElementById('loadingStatus');
+    el.classList.add('fade');
+    setTimeout(() => {
+      el.textContent = text;
+      el.classList.remove('fade');
+    }, 350);
+  }
+
   async function startScan() {
     const urlVal = document.getElementById('urlInput').value;
     const errEl  = document.getElementById('errorMsg');
@@ -1049,11 +1110,9 @@
     document.getElementById('inputState').style.display = 'none';
     document.getElementById('loadingState').classList.add('active');
 
-    // Kør rigtig Anseri-scan parallelt med loading-animationen
-    const steps = ['step1','step2','step3','step4','step5'];
+    // Kick scan off in parallel — svaret kommer typisk efter 60-80s
     let teaserData = null;
     let score = 0;
-
     let scanDone = false;
     const scanPromise = runAnserScan(domain).then(teaser => {
       teaserData = teaser;
@@ -1069,20 +1128,40 @@
       scanDone = true;
     });
 
-    // Første gennemløb: marker de 5 steps som done i naturligt tempo
-    for (let i = 0; i < steps.length; i++) {
-      await sleep(900 + Math.random() * 500);
-      document.getElementById(steps[i]).classList.add('done');
+    // Progress bar + statusmeddelelser der driver uafhængigt af scan-promise.
+    // Baren når 90% efter ~75s og venter der indtil svar — så lukker vi til 100%.
+    const bar = document.getElementById('loadingProgressBar');
+    const pct = document.getElementById('loadingProgressPct');
+    const TARGET_SECONDS = 75;
+    const startTime = Date.now();
+    let lastMsgIndex = -1;
+    setLoadingStatus(LOADING_MESSAGES[0].text);
+    lastMsgIndex = 0;
+
+    while (!scanDone) {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const raw = elapsed / TARGET_SECONDS;
+      // Ease-out + cap ved 90 så der er plads til "den sidste bid" når svaret faktisk kommer
+      const progress = Math.min(90, Math.round(90 * (1 - Math.pow(1 - Math.min(raw, 1), 2))));
+      bar.style.width = progress + '%';
+      pct.textContent = progress + '%';
+
+      // Roter til næste besked når dens "at" er passeret
+      for (let i = LOADING_MESSAGES.length - 1; i > lastMsgIndex; i--) {
+        if (elapsed >= LOADING_MESSAGES[i].at) {
+          setLoadingStatus(LOADING_MESSAGES[i].text);
+          lastMsgIndex = i;
+          break;
+        }
+      }
+      await sleep(500);
     }
 
-    // Scanneren kører stadig (60-80s typisk) — hold sidste step "aktiv" indtil svar
-    const step5 = document.getElementById('step5');
-    step5.classList.remove('done');
-    step5.textContent = 'Sammenstiller resultaterne — kan tage op til et minut...';
-    await scanPromise;
-    step5.classList.add('done');
-    step5.textContent = 'Sammenstiller resultaterne...';
-    await sleep(400);
+    // Luk baren til 100% og vis afslutningstekst
+    bar.style.width = '100%';
+    pct.textContent = '100%';
+    setLoadingStatus('Færdig — her er hvad vi fandt');
+    await sleep(700);
 
     currentScore = score;
 
