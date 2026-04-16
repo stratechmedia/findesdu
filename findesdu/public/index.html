@@ -224,6 +224,76 @@
       font-size: 0.7rem;
     }
 
+    /* ── QUESTIONS STEP ─────────────────────────────────────────────────── */
+    .questions-state { display: none; }
+    .questions-state.active { display: block; }
+
+    .questions-intro {
+      font-size: 0.9rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .questions-sub {
+      font-size: 0.82rem;
+      color: var(--mid);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .question-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0.75rem 0 0.35rem;
+    }
+    .question-input {
+      width: 100%;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      outline: none;
+      color: var(--dark);
+      background: var(--light);
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .question-input::placeholder { color: #6A8DA3; opacity: 0.6; }
+    .question-input:focus { border-color: var(--teal); background: #0a1e30; }
+
+    .question-examples {
+      background: rgba(14, 165, 165, 0.08);
+      border-left: 2px solid var(--teal);
+      padding: 0.7rem 0.85rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+      font-size: 0.78rem;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+    .question-examples strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .questions-actions {
+      display: flex; gap: 8px; margin-top: 1rem;
+    }
+    .questions-back {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      padding: 0.8rem 1rem;
+      background: transparent;
+      color: var(--mid);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .questions-back:hover { color: var(--dark); border-color: var(--mid); }
+
     /* ── LOADING ─────────────────────────────────────────────────────────── */
     .loading-state {
       display: none;
@@ -776,12 +846,43 @@
             autocomplete="off"
             spellcheck="false"
           />
-          <button class="scan-btn" id="scanBtn" onclick="startScan()">
-            Tjek nu
+          <button class="scan-btn" id="scanBtn" onclick="goToQuestions()">
+            Næste
           </button>
         </div>
         <div class="error-msg" id="errorMsg">Indtast venligst en gyldig hjemmeside-adresse</div>
         <p class="scan-note">Gratis og fortroligt. Vi gemmer ikke din adresse.</p>
+      </div>
+
+      <!-- QUESTIONS STATE -->
+      <div class="questions-state" id="questionsState">
+        <div class="questions-intro">Hvad spørger dine kunder om?</div>
+        <div class="questions-sub">
+          Skriv tre spørgsmål dine kunder faktisk bruger når de leder efter nogen som dig på ChatGPT eller Google. Det er dem vi stiller AI'erne — og kigger efter dig i svarene.
+        </div>
+
+        <div class="question-examples">
+          <strong>Eksempler</strong> (for en elektriker i Aarhus):<br/>
+          · "Bedste elektriker i Aarhus"<br/>
+          · "Akut elektriker døgnvagt Jylland"<br/>
+          · "Hvad koster elinstallation i et nybyggeri?"
+        </div>
+
+        <div class="question-label">Spørgsmål 1</div>
+        <input type="text" id="q1" class="question-input" placeholder="Fx 'bedste [din branche] i [din by]'" />
+
+        <div class="question-label">Spørgsmål 2</div>
+        <input type="text" id="q2" class="question-input" placeholder="Fx et spørgsmål om pris, udvalg eller service" />
+
+        <div class="question-label">Spørgsmål 3</div>
+        <input type="text" id="q3" class="question-input" placeholder="Fx en sammenligning eller anbefaling" />
+
+        <div class="error-msg" id="questionsError">Skriv venligst alle tre spørgsmål</div>
+
+        <div class="questions-actions">
+          <button class="questions-back" onclick="backToInput()">← Tilbage</button>
+          <button class="scan-btn" style="flex:1" onclick="startScan()">Tjek mig nu</button>
+        </div>
       </div>
 
       <!-- LOADING STATE -->
@@ -795,7 +896,7 @@
           <div class="loading-progress-bar" id="loadingProgressBar"></div>
         </div>
         <div class="loading-progress-pct" id="loadingProgressPct">0%</div>
-        <div class="loading-hint">Det tager cirka et minut. Vi stiller AI'erne en masse spørgsmål om din branche for at se om de nævner dig.</div>
+        <div class="loading-hint">Det tager cirka et minut. Vi stiller ChatGPT og Google dine tre spørgsmål — og kigger efter dig i svarene.</div>
       </div>
 
       <!-- RESULT STATE -->
@@ -807,8 +908,8 @@
             <div class="score-label">Hvor synlig er du?</div>
             <div class="score-badge" id="scoreBadge">—</div>
           </div>
-          <div style="text-align:right; font-size:0.8rem; color:var(--mid); max-width:170px; line-height:1.4;">
-            Baseret på <strong style="color:var(--dark)">24 rigtige spørgsmål</strong> stillet til ChatGPT og Google
+          <div style="text-align:right; font-size:0.8rem; color:var(--mid); max-width:180px; line-height:1.4;">
+            På <strong style="color:var(--dark)">dine 3 spørgsmål</strong> — stillet til ChatGPT og Google
           </div>
         </div>
 
@@ -993,16 +1094,21 @@
   // ── Anseri scan API ───────────────────────────────────────────────────────
   const ANSERI_API = 'https://api-production-0133.up.railway.app';
 
-  async function runAnserScan(domain) {
+  async function runAnserScan(domain, customQuestions) {
+    const body = { domain, mode: 'teaser' };
+    // Anseri accepterer op til 3 customQuestions som pillars
+    // Hver pillar får 3 auto-genererede cluster-spørgsmål = 12 i alt × 2 AI = 24 svar
+    if (Array.isArray(customQuestions) && customQuestions.length > 0) {
+      body.customQuestions = customQuestions.slice(0, 3);
+    }
     const res = await fetch(`${ANSERI_API}/visibility-scanner/scan`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ domain, mode: 'teaser' }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) throw new Error('Scan fejlede (' + res.status + ')');
     const json = await res.json();
     // Anseri returnerer {success, data: {scanId, teaser: {...}}}
-    // Unwrap til teaser-objektet så frontenden kan læse score/aiSystemBreakdown direkte
     return json?.data?.teaser || json?.teaser || json;
   }
 
@@ -1070,17 +1176,40 @@
     }
   }
 
+  // ── Step-navigation ──────────────────────────────────────────────────────
+  // State machine: inputState → questionsState → loadingState → resultState
+  function goToQuestions() {
+    const urlVal = document.getElementById('urlInput').value;
+    const errEl  = document.getElementById('errorMsg');
+    if (!validateUrl(urlVal)) {
+      errEl.classList.add('active');
+      return;
+    }
+    errEl.classList.remove('active');
+    currentDomain = normalizeDomain(urlVal);
+    document.getElementById('inputState').style.display = 'none';
+    document.getElementById('questionsState').classList.add('active');
+    // Flyt fokus til første spørgsmål
+    setTimeout(() => document.getElementById('q1').focus(), 100);
+  }
+
+  function backToInput() {
+    document.getElementById('questionsState').classList.remove('active');
+    document.getElementById('inputState').style.display = 'block';
+    document.getElementById('questionsError').classList.remove('active');
+  }
+
   // ── Scan ──────────────────────────────────────────────────────────────────
 
   // Statusmeddelelser der roterer mens scanningen kører.
-  // Hver besked vises ~8s. Skriv som om du fortæller en ven hvad der sker.
+  // {text} i strings bliver erstattet med brugerens eget spørgsmål.
   const LOADING_MESSAGES = [
     { at:  0, text: 'Finder din hjemmeside...' },
-    { at:  6, text: 'Spørger ChatGPT om din branche' },
-    { at: 14, text: 'Tjekker hvem Google anbefaler' },
-    { at: 24, text: 'Kigger efter dig i AI-svarene' },
-    { at: 36, text: 'Sammenligner med andre i din branche' },
-    { at: 48, text: 'Finder ud af hvem der bliver foretrukket' },
+    { at:  6, text: 'Stiller ChatGPT dit første spørgsmål' },
+    { at: 16, text: 'Spørger videre — om din branche' },
+    { at: 26, text: 'Spørger Google om dit andet spørgsmål' },
+    { at: 38, text: 'Kigger efter dig i AI-svarene' },
+    { at: 50, text: 'Ser hvem der bliver nævnt i stedet' },
     { at: 62, text: 'Samler det hele — næsten færdig' },
     { at: 78, text: 'Sidste detaljer...' },
   ];
@@ -1094,27 +1223,33 @@
     }, 350);
   }
 
-  async function startScan() {
-    const urlVal = document.getElementById('urlInput').value;
-    const errEl  = document.getElementById('errorMsg');
+  // Global: gemmer brugerens 3 spørgsmål så vi kan bruge dem i result-teksten
+  let currentQuestions = [];
 
-    if (!validateUrl(urlVal)) {
-      errEl.classList.add('active');
+  async function startScan() {
+    // Questions-state er nu aktivt — indsaml og valider
+    const q1 = document.getElementById('q1').value.trim();
+    const q2 = document.getElementById('q2').value.trim();
+    const q3 = document.getElementById('q3').value.trim();
+    const qErrEl = document.getElementById('questionsError');
+
+    if (!q1 || !q2 || !q3 || q1.length < 5 || q2.length < 5 || q3.length < 5) {
+      qErrEl.classList.add('active');
       return;
     }
-    errEl.classList.remove('active');
+    qErrEl.classList.remove('active');
 
-    const domain = normalizeDomain(urlVal);
-    currentDomain = domain;
+    currentQuestions = [q1, q2, q3];
+    const domain = currentDomain;
 
-    document.getElementById('inputState').style.display = 'none';
+    document.getElementById('questionsState').classList.remove('active');
     document.getElementById('loadingState').classList.add('active');
 
     // Kick scan off in parallel — svaret kommer typisk efter 60-80s
     let teaserData = null;
     let score = 0;
     let scanDone = false;
-    const scanPromise = runAnserScan(domain).then(teaser => {
+    const scanPromise = runAnserScan(domain, currentQuestions).then(teaser => {
       teaserData = teaser;
       score = Math.round(
         teaserData.breakdown?.overall ??
@@ -1234,7 +1369,18 @@
   }
 
   // ── Enter-tast ────────────────────────────────────────────────────────────
+  // URL input → gå videre til spørgsmåls-step
   document.getElementById('urlInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') goToQuestions();
+  });
+  // Enter i q1/q2 hopper til næste spørgsmål. Enter i q3 starter scan.
+  document.getElementById('q1').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('q2').focus();
+  });
+  document.getElementById('q2').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('q3').focus();
+  });
+  document.getElementById('q3').addEventListener('keydown', e => {
     if (e.key === 'Enter') startScan();
   });
 
