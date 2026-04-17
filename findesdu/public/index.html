@@ -447,178 +447,6 @@
       flex-shrink: 0;
     }
 
-    .blurred-section {
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radius);
-      margin-bottom: 1.5rem;
-    }
-
-    .blurred-content {
-      filter: blur(4px);
-      user-select: none;
-      pointer-events: none;
-      padding: 1rem;
-      background: var(--light);
-      border-radius: var(--radius);
-    }
-
-    .blur-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 8px;
-      background: rgba(9,21,32,0.88);
-      backdrop-filter: blur(2px);
-    }
-
-    .blur-overlay p {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--dark);
-      text-align: center;
-    }
-
-    /* ── EMAIL GATE ──────────────────────────────────────────────────────── */
-    .email-gate {
-      border-top: 1px solid var(--border);
-      padding-top: 1.25rem;
-    }
-
-    .email-gate-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 0.5rem;
-    }
-
-    .email-gate-sub {
-      font-size: 0.75rem;
-      color: var(--mid);
-      margin-bottom: 1rem;
-    }
-
-    .email-row {
-      display: flex; gap: 8px;
-    }
-
-    .email-input {
-      flex: 1;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.9rem;
-      padding: 0.75rem 1rem;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      outline: none;
-      color: var(--dark);
-      background: var(--light);
-      transition: border-color 0.2s;
-    }
-
-    .email-input::placeholder { color: #AABBCC; }
-    .email-input:focus { border-color: var(--teal); background: #0a1e30; }
-
-    .email-btn {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 0.75rem 1.2rem;
-      background: var(--dark);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-
-    .email-btn:hover { background: var(--teal); }
-
-    /* ── SUCCESS STATE ───────────────────────────────────────────────────── */
-    .success-state {
-      display: none;
-      text-align: center;
-      padding: 1.5rem 0 0.5rem;
-    }
-    .success-state.active { display: block; }
-
-    .success-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
-      color: var(--dark);
-      margin-bottom: 0.5rem;
-    }
-
-    .success-sub {
-      font-size: 0.85rem;
-      color: var(--mid);
-      margin-bottom: 1.25rem;
-    }
-
-    /* ── VALUE STACK ────────────────────────────────────────────────────── */
-    .value-stack {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.25rem;
-      margin: 1rem 0;
-      text-align: left;
-    }
-
-    .value-item {
-      font-size: 0.82rem;
-      color: var(--teal);
-      padding: 4px 0;
-      font-weight: 500;
-    }
-
-    /* ── SUCCESS CTAS ────────────────────────────────────────────────────── */
-    .success-ctas {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 1rem;
-    }
-
-    .success-cta-primary {
-      display: block;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 0.9rem 1.5rem;
-      background: var(--teal);
-      color: white;
-      border-radius: var(--radius);
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .success-cta-primary:hover { background: var(--teal-mid); }
-
-    .success-cta-secondary {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 0.75rem;
-      color: var(--mid);
-      text-decoration: none;
-      text-align: center;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .success-cta-secondary:hover { color: var(--teal); border-color: var(--teal); }
-
-    .success-guarantee {
-      font-size: 0.75rem;
-      color: var(--mid);
-      text-align: center;
-      font-style: italic;
-      line-height: 1.5;
-    }
-
     /* ── SOCIAL PROOF ────────────────────────────────────────────────────── */
     .proof-strip {
       display: flex; align-items: center; justify-content: center;
@@ -806,7 +634,7 @@
     .error-msg.active { display: block; }
 
     @media (max-width: 480px) {
-      .input-row, .email-row { flex-direction: column; }
+      .input-row { flex-direction: column; }
       .score-badge { font-size: 1.8rem; }
     }
   </style>
@@ -919,52 +747,18 @@
 
         <ul class="findings-list" id="findingsList"></ul>
 
-        <!-- Blurred deeper analysis -->
-        <div class="blurred-section">
-          <div class="blurred-content">
-            <div style="font-size:0.8rem; font-weight:600; margin-bottom:0.5rem; color:var(--dark);">Hvem tager dine kunder?</div>
-            <div style="font-size:0.75rem; color:var(--mid);">De konkurrenter der nævnes i stedet for dig — og præcis hvorfor...</div>
-            <div style="margin-top:0.75rem; font-size:0.75rem; color:var(--mid);">Hvad der mangler på din hjemmeside for at du begynder at dukke op...</div>
-          </div>
-          <div class="blur-overlay">
-            <p>Fuld analyse i den komplette rapport<br/>— gratis via Anseri.ai</p>
-          </div>
-        </div>
-
-        <!-- EMAIL GATE -->
-        <div class="email-gate" id="emailGate">
-          <div class="email-gate-label">Få den fulde analyse gratis</div>
-          <div class="email-gate-sub">Du får: hvem der vinder over dig · hvad der konkret mangler · en handlingsplan du selv kan gå i gang med.</div>
-          <div class="email-row">
-            <input
-              type="email"
-              id="emailInput"
-              class="email-input"
-              placeholder="din@email.dk"
-            />
-            <button class="email-btn" onclick="submitEmail()">Send mig rapporten</button>
-          </div>
-        </div>
-
-        <!-- SUCCESS STATE -->
-        <div class="success-state" id="successState">
-          <div class="success-title">Tjek din mail</div>
-          <div class="success-sub">Vi har sendt dig et personligt link til din fulde rapport. Klik på linket i mailen — det logger dig automatisk ind.</div>
-
-          <div class="value-stack">
-            <div class="value-item">✓ Hvem der nævnes i stedet for dig</div>
-            <div class="value-item">✓ Hvad der konkret mangler på din hjemmeside</div>
-            <div class="value-item">✓ Trin-for-trin plan til at komme med</div>
-          </div>
-
-          <div class="success-ctas">
-            <a class="success-cta-primary" href="https://publisherpact.com" target="_blank" id="dashboardBtn">Åbn min rapport →</a>
-            <a class="success-cta-secondary" href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank">Book et gratis 30-min møde</a>
-          </div>
-
-          <div class="success-guarantee">
-            Ser du ikke mailen? Tjek din spam-mappe eller skriv til susanne@stratechmedia.com
-          </div>
+        <!-- CTA: Kontakt os -->
+        <div style="margin-top:1.5rem; text-align:center;">
+          <p style="font-size:0.85rem; color:var(--mid); margin-bottom:1rem; line-height:1.5;">
+            Vi kan hjælpe dig med at blive synlig i AI-svarene.<br/>Book en gratis snak — vi gennemgår dine resultater sammen.
+          </p>
+          <a href="https://calendly.com/susanne-igq/er-du-med-i-svaret" target="_blank"
+             style="display:inline-block; background:var(--teal); color:white; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.95rem; padding:0.85rem 2rem; border-radius:var(--radius); text-decoration:none; transition:background 0.2s;">
+            Book en gratis 30-min snak →
+          </a>
+          <p style="font-size:0.75rem; color:var(--mid); margin-top:0.75rem;">
+            Eller skriv direkte: <a href="mailto:susanne@stratechmedia.com" style="color:var(--teal);">susanne@stratechmedia.com</a>
+          </p>
         </div>
       </div>
 
@@ -973,7 +767,7 @@
     <div class="proof-strip">
       <div class="proof-item">Gratis scanning</div>
       <div class="proof-item">Ingen oprettelse</div>
-      <div class="proof-item">Svar på 30 sekunder</div>
+      <div class="proof-item">Svar på ét minut</div>
     </div>
 
   </div>
@@ -1050,7 +844,7 @@
 <section class="final-cta">
   <div class="section-label" style="color:rgba(255,255,255,0.5)">Klar til at finde ud af det?</div>
   <h2 class="section-title">Mens du venter tager<br/>nogen dine kunder</h2>
-  <p class="section-sub">Tjek det nu. 30 sekunder. Gratis.</p>
+  <p class="section-sub">Tjek det nu. Ét minut. Gratis.</p>
   <a class="cta-btn-large" href="#" onclick="document.getElementById('urlInput').focus(); window.scrollTo({top:0, behavior:'smooth'}); return false;">
     Start gratis tjek
   </a>
@@ -1335,46 +1129,10 @@
     }
   }
 
-  // ── Email / lead capture ──────────────────────────────────────────────────
-  async function submitEmail() {
-    const emailInput = document.getElementById('emailInput');
-    const email      = emailInput.value.trim();
-
-    if (!email || !email.includes('@')) {
-      emailInput.style.borderColor = 'var(--red)';
-      return;
-    }
-    emailInput.style.borderColor = '';
-
-    const btn       = document.querySelector('.email-btn');
-    btn.textContent = 'Sender...';
-    btn.disabled    = true;
-
-    try {
-      const res  = await fetch('/api/leads', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ email, domain: currentDomain, score: currentScore }),
-      });
-      const data = await res.json();
-      if (data.redirectUrl) {
-        const dashBtn = document.getElementById('dashboardBtn');
-        if (dashBtn) dashBtn.href = data.redirectUrl;
-      }
-    } catch (e) {
-      console.warn('Lead capture failed (non-fatal):', e);
-    }
-
-    document.getElementById('emailGate').style.display = 'none';
-    document.getElementById('successState').classList.add('active');
-  }
-
   // ── Enter-tast ────────────────────────────────────────────────────────────
-  // URL input → gå videre til spørgsmåls-step
   document.getElementById('urlInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') goToQuestions();
   });
-  // Enter i q1/q2 hopper til næste spørgsmål. Enter i q3 starter scan.
   document.getElementById('q1').addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('q2').focus();
   });
@@ -1383,10 +1141,6 @@
   });
   document.getElementById('q3').addEventListener('keydown', e => {
     if (e.key === 'Enter') startScan();
-  });
-
-  document.getElementById('emailInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') submitEmail();
   });
 </script>
 </body>
