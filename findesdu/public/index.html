@@ -1203,15 +1203,16 @@
 
   // Statusmeddelelser der roterer mens scanningen kører.
   // {text} i strings bliver erstattet med brugerens eget spørgsmål.
+  // Version 3: Varm/personlig Zetland-stil med "vi" (valgt af Mette)
   const LOADING_MESSAGES = [
-    { at:  0, text: 'Finder din hjemmeside...' },
-    { at:  6, text: 'Stiller ChatGPT dit første spørgsmål' },
-    { at: 16, text: 'Spørger videre — om din branche' },
-    { at: 26, text: 'Spørger Google om dit andet spørgsmål' },
-    { at: 38, text: 'Kigger efter dig i AI-svarene' },
-    { at: 50, text: 'Ser hvem der bliver nævnt i stedet' },
-    { at: 62, text: 'Samler det hele — næsten færdig' },
-    { at: 78, text: 'Sidste detaljer...' },
+    { at:  0, text: 'Vi kigger på din hjemmeside nu...' },
+    { at:  6, text: 'Vi stiller ChatGPT dit første spørgsmål' },
+    { at: 16, text: 'Nu spørger vi videre på dine vegne' },
+    { at: 26, text: 'Vi tjekker om Google kender dig' },
+    { at: 38, text: 'Vi leder efter dig i svarene' },
+    { at: 50, text: 'Vi kigger på hvem der bliver nævnt i stedet for dig' },
+    { at: 62, text: 'Vi samler det hele — næsten færdig' },
+    { at: 78, text: 'Lige et øjeblik endnu...' },
   ];
 
   function setLoadingStatus(text) {
